@@ -16,6 +16,7 @@
 
                     {{ __('You are logged in!') }}
                 </div>
+                <a href="{{route('asistencias.index')}}">Asistencias</a>
             </div>
         </div>
     </div>
