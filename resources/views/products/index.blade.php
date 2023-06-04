@@ -52,8 +52,8 @@
                                 <i class="fas fa-edit"></i> Editar
                             </a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
+                                @csrf <!--Token de seguridad -->
+                                @method('DELETE') // Método HTTP DELETE
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fas fa-trash-alt"></i> Eliminar
                                 </button>

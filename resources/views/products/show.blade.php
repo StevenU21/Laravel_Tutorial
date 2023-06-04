@@ -23,5 +23,6 @@
                 <i class="fas fa-arrow-left"></i> Volver
             </a>
         </div>
+        
     </div>
 @endsection
