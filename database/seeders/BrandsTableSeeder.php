@@ -25,7 +25,7 @@ class BrandsTableSeeder extends Seeder
             'Lenovo',
             // Agrega más nombres de marcas según tus necesidades
             //php artisan make:seeder BrandsTableSeeder para crear seeder
-            //php artisan db:seed --class=BrandSeeder para ejecutar seeder
+            //php artisan db:seed --class=BrandsTableSeeder para ejecutar seeder
 
             /*
             el seeder sirve para generar datos de prueba en la base de datos
