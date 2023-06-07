@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('brand')->get(); // Obtiene todos los Productos con sus Marcas
+        $products = Product::with('brand')->paginate(15); // Obtiene todos los Productos con sus Marcas
 
         return view('products.index', compact('products')); // Retorna la vista de los Productos
     }

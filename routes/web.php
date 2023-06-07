@@ -26,5 +26,3 @@ Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('pro
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update'); // Ruta para Actualizar los Productos
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show'); // Ruta para Mostrar los Productos
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy'); // Ruta para Eliminar los Productos
-
-

@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +21,23 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $faker = Factory::create();
+
+        for ($i = 1; $i <= 10; $i++) {
+            DB::table('brands')->insert([
+                'name' => $faker->company,
+            ]);
+        }
+
+        $brandIds = DB::table('brands')->pluck('id')->toArray();
+
+        for ($i = 1; $i <= 50; $i++) {
+            DB::table('products')->insert([
+                'name' => $faker->word,
+                'description' => $faker->sentence,
+                'brand_id' => $faker->randomElement($brandIds),
+            ]);
+        }
     }
 }

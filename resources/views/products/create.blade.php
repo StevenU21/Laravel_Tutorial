@@ -6,7 +6,6 @@
 
         <form action="{{ route('products.store') }}" method="POST">
             @csrf <!-- Token de seguridad -->
-
             <div class="mb-3">
                 <label for="name" class="form-label">
                     <i class="fas fa-heading text-primary"></i> Nombre

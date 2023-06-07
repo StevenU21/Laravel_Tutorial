@@ -2,24 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Productos</h1>
-
-        @if (session('success'))
-            <!-- Mensaje de éxito después de crear -->
-            <div class="alert alert-primary">
-                <i class="fas fa-check-circle text-primary"></i> {{ session('success') }}
-            </div>
-        @elseif (session('message'))
-            <!-- Mensaje después de actualizar -->
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle text-success"></i> {{ session('message') }}
-            </div>
-        @elseif (session('alert'))
-            <!-- Mensaje después de eliminar -->
-            <div class="alert alert-danger">
-                <i class="fas fa-exclamation-circle text-danger"></i> {{ session('alert') }}
-            </div>
-        @endif
+        <h1 class="mb-4">Productos</h1>
 
         <a href="/" class="btn btn-secondary mb-3">
             <i class="fas fa-arrow-left"></i> Volver a la vista de bienvenida
@@ -29,39 +12,62 @@
             <i class="fas fa-plus"></i> Agregar Nuevo Producto
         </a>
 
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th><i class="fas fa-heading text-primary"></i> Nombre</th>
-                    <th><i class="fas fa-tag text-info"></i> Marca</th>
-                    <th><i class="fas fa-info-circle text-warning"></i> Descripción</th>
-                    <th><i class="fas fa-cogs text-secondary"></i> Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($products as $product)
+        @if (session('success'))
+        <!-- Mensaje de éxito después de crear -->
+        <div class="alert alert-primary">
+            <i class="fas fa-check-circle text-primary"></i> {{ session('success') }}
+        </div>
+    @elseif (session('message'))
+        <!-- Mensaje después de actualizar -->
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle text-success"></i> {{ session('message') }}
+        </div>
+    @elseif (session('alert'))
+        <!-- Mensaje después de eliminar -->
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle text-danger"></i> {{ session('alert') }}
+        </div>
+    @endif
+
+        <div class="table-container">
+            <table class="table table-bordered table-hover fixed-header">
+                <thead>
                     <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->brand->name }}</td>
-                        <td>{{ $product->description }}</td>
-                        <td>
-                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">
-                                <i class="fas fa-eye"></i> Ver
-                            </a>
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
-                                @csrf <!--Token de seguridad -->
-                                @method('DELETE') // Método HTTP DELETE
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Eliminar
-                                </button>
-                            </form>
-                        </td>
+                        <th><i class="fas fa-heading text-primary"></i> Nombre</th>
+                        <th><i class="fas fa-tag text-info"></i> Marca</th>
+                        <th><i class="fas fa-info-circle text-warning"></i> Descripción</th>
+                        <th><i class="fas fa-cogs text-secondary"></i> Acciones</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($products as $product)
+                        <tr>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->brand->name }}</td>
+                            <td>{{ $product->description }}</td>
+                            <td>
+                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">
+                                    <i class="fas fa-eye"></i> Ver
+                                </a>
+                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                    class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="card-body">
+            {{ $products->onEachSide(2)->links() }}
+        </div>
     </div>
 @endsection

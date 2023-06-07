@@ -62,6 +62,25 @@
         .m-b-md {
             margin-bottom: 30px;
         }
+
+        .table-container {
+            max-height: 400px;
+            /* Ajusta el tamaño máximo deseado */
+            overflow-y: scroll;
+        }
+
+        .fixed-header thead {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        .pagination-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 
