@@ -9,12 +9,26 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('brand')->paginate(15); // Obtiene todos los Productos con sus Marcas
+        $filter = $request->input('filter');
+        $searchTerm = $request->input('search');
 
-        return view('products.index', compact('products')); // Retorna la vista de los Productos
+        $query = Product::with('brand');
+
+        if ($filter === 'name') {
+            $query->where('name', 'LIKE', "%$searchTerm%");
+        } elseif ($filter === 'brand') {
+            $query->whereHas('brand', function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', "%$searchTerm%");
+            });
+        }
+
+        $products = $query->paginate(5);
+
+        return view('products.index', compact('products'));
     }
+
 
     public function create() // Retorna la vista para Crear los Productos
     {

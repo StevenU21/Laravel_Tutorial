@@ -81,6 +81,50 @@
             display: flex;
             justify-content: center;
         }
+
+        .custom-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-input {
+            width: 60%;
+            margin-right: 10px;
+        }
+
+        .custom-select {
+            width: 40%;
+            margin-right: 10px;
+        }
+
+        .custom-button {
+            width: 20%;
+            margin-left: 10px;
+        }
+
+        .custom-form,
+        .custom-input,
+        .custom-select,
+        .custom-button {
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .table {
+            table-layout: fixed;
+        }
+
+        .table th,
+        .table td {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 
