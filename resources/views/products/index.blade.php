@@ -22,6 +22,11 @@
             <div class="alert alert-success">
                 <i class="fas fa-check-circle text-success"></i> {{ session('message') }}
             </div>
+        @elseif (session('alert'))
+            <!-- Mensaje después de eliminar -->
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle text-danger"></i> {{ session('alert') }}
+            </div>
         @endif
 
         <div class="table-container">
