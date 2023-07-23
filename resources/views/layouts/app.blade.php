@@ -26,10 +26,9 @@ archivos CSS y JS necesarios para el funcionamiento de la aplicación.
 </head>
 
 <body>
-    <div id="background-container" class="particles-js"></div>
-    <div class="flex-center position-ref full-height">
-        <div class="content">
-            <div class="title m-b-md">
+    <div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <div class="content text-center">
+            <div class="title m-b-md display-4">
                 {{ config('app.name', 'Laravel') }}
             </div>
 

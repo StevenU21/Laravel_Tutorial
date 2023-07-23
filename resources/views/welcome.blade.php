@@ -4,6 +4,9 @@
 La vista welcome es la página de inicio de la aplicación.
 Aquí se muestra un mensaje de bienvenida, y se incluyen los
 enlaces a la página del proyecto y al repositorio del creador.
+
+pero falta definir algunas rutas, por eso todavia no esta lista
+para ejecutarla
 -->
 @section('content')
     <div class="container">
