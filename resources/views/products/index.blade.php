@@ -34,7 +34,7 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>
-                                <a href="#" class="btn btn-primary">
+                                <a href="{{ route('products.show', $product->id)}}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i> Ver
                                 </a>
                                 <a href="#" class="btn btn-success">
