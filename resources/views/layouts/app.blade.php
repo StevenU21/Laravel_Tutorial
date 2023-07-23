@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
+<!--
+El archivo app.blade.php es la plantilla principal de la aplicación.
+Aquí se define la estructura básica de la página, y se incluyen los
+archivos CSS y JS necesarios para el funcionamiento de la aplicación.
+-->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
