@@ -13,10 +13,15 @@
         </a>
 
         @if (session('success'))
-        <!-- Mensaje de éxito después de crear -->
-        <div class="alert alert-primary">
-            <i class="fas fa-check-circle text-primary"></i> {{ session('success') }}
-        </div>
+            <!-- Mensaje de éxito después de crear -->
+            <div class="alert alert-primary">
+                <i class="fas fa-check-circle text-primary"></i> {{ session('success') }}
+            </div>
+        @elseif (session('message'))
+            <!-- Mensaje después de actualizar -->
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle text-success"></i> {{ session('message') }}
+            </div>
         @endif
 
         <div class="table-container">
@@ -34,7 +39,7 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>
-                                <a href="{{ route('products.show', $product->id)}}" class="btn btn-primary">
+                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i> Ver
                                 </a>
                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success">
