@@ -12,6 +12,13 @@
             <i class="fas fa-plus"></i> Agregar Nuevo Producto
         </a>
 
+        @if (session('success'))
+        <!-- Mensaje de éxito después de crear -->
+        <div class="alert alert-primary">
+            <i class="fas fa-check-circle text-primary"></i> {{ session('success') }}
+        </div>
+        @endif
+
         <div class="table-container">
             <table class="table table-bordered table-hover fixed-header">
                 <thead>
