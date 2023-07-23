@@ -33,3 +33,4 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show'); // Ruta para Mostrar un Producto
 Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit'); // Ruta para Editar un Producto
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update'); // Ruta para Actualizar un Producto
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy'); // Ruta para Eliminar un Producto
