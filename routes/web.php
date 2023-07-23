@@ -31,3 +31,4 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); // Ruta para Crear los Productos
 Route::post('/products', [ProductController::class, 'store'])->name('products.store'); // Ruta para Guardar los Productos
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show'); // Ruta para Mostrar un Producto
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit'); // Ruta para Editar un Producto
