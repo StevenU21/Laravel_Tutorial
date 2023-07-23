@@ -8,10 +8,10 @@
             <i class="fas fa-arrow-left"></i> Volver a la vista de bienvenida
         </a>
 
-        <a href="#" class="btn btn-primary mb-3">
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">
             <i class="fas fa-plus"></i> Agregar Nuevo Producto
         </a>
-        
+
         <div class="table-container">
             <table class="table table-bordered table-hover fixed-header">
                 <thead>
