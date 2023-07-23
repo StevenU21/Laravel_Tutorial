@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create'); // se muestra el formulario para crear un producto
     }
 
     /**
