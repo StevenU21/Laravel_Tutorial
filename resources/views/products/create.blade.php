@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Agregar Nuevo Producto</h1>
 
-        <form action="#" method="POST">
+        <form action="{{ route('products.store')}}" method="POST">
             @csrf
             <!-- Token de seguridad -->
             <div class="mb-3">
