@@ -66,7 +66,8 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $products = Product::find($id); // se obtiene el producto con el id que se envia
+        return view('products.edit', compact('products')); // se envia el producto a la vista
     }
 
     /**
