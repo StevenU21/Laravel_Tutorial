@@ -16,6 +16,20 @@
             </div>
 
             <div class="mb-3">
+                <label for="brand" class="form-label">
+                    <i class="fas fa-tag text-info"></i> Marca
+                </label>
+                <select class="form-control" id="brand" name="brand_id" required>
+                    <option value="">Seleccionar Marca</option>
+                    @foreach ($brands as $brand)
+                        <option value="{{ $brand->id }}" {{ $brand->id == $product->brand_id ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="description" class="form-label">
                     <i class="fas fa-info-circle text-warning"></i> Descripción
                 </label>
