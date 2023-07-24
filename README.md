@@ -3,7 +3,7 @@ A la hora de empezar un nuevo proyecto con Laravel tenemos que conocer ciertos c
 **Instalación**
 
   Instalar Laravel utilizando Composer:
-`composer global require laravel/installer`
+```composer global require laravel/installer```
 -  Crear un nuevo proyecto de Laravel:
    `laravel new nombre-del-proyecto`
 - Ejecutar el servidor de desarrollo de Laravel:
