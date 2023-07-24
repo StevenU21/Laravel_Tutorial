@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('brands', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->string('name', 60); // Nombre de la Marca con un Limite de 60 Caracteres
             $table->timestamps();
         });
     }
