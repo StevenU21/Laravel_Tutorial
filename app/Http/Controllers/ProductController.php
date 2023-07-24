@@ -75,7 +75,8 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $products = Product::find($id); // se obtiene el producto con el id que se envia
-        return view('products.show', compact('products')); // se envia el producto a la vista
+        $brand = $products->brand; // se obtienen todas las marcas
+        return view('products.show', compact('products', 'brand')); // se envia el producto y la marca a la vista
     }
 
     /**
