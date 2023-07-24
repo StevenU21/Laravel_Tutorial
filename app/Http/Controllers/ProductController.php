@@ -85,7 +85,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::find($id); // se obtiene el producto con el id que se envia
-        return view('products.edit', compact('product')); // se envia el producto a la vista
+        $brands = Brand::all(); // se obtienen todas las marcas
+        return view('products.edit', compact('product', 'brands')); // se envia el producto a la vista
     }
 
     /**
@@ -98,6 +99,7 @@ class ProductController extends Controller
         $request->validate([ // Valida los campos
             'name' => 'required',
             'description' => 'required',
+            'brand_id' => 'required'
         ]);
 
         $product->update($request->all()); // Actualiza el Producto
