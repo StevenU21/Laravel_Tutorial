@@ -1,42 +1,184 @@
-# Laravel Tutorial
+**Crear un CRUD Básico en Laravel**
 
-Este repositorio de GitHub contiene una serie de ramas que abordan diferentes temas relacionados con el framework Laravel. Cada rama se enfoca en un aspecto específico, proporcionando ejemplos y guías paso a paso para ayudar a los desarrolladores a aprender y familiarizarse con Laravel.
+En este tutorial, aprenderemos cómo crear un CRUD básico en Laravel, lo que implica crear, leer, actualizar y eliminar registros en una base de datos. Seguiremos los siguientes pasos:
 
-## Ramas disponibles
+**Paso 1: Instalación**
+Primero, asegurémonos de tener Laravel instalado. Si no lo tienes, sigue estos pasos:
+- Instalar Laravel utilizando Composer:
+  ```
+  composer global require laravel/installer
+  ```
+  ```
+  laravel new nombreproyecto
+  ```
 
-- [Rama CRUD](#rama-crud): Ejemplo de creación de un CRUD básico utilizando Laravel.
-- [Rama Comandos](#rama-comandos): Ejemplo de uso de comandos de Artisan y creación de comandos personalizados.
-- [Rama Básicos](#rama-básicos): Ejemplos de los conceptos básicos de Laravel, como enrutamiento, controladores y vistas.
+**Paso 2: Configurar el entorno**
+Antes de comenzar, asegúrate de haber configurado el archivo `.env` con la información de la base de datos que desees utilizar.
 
-## Rama CRUD
+**Paso 3: Crear la Base de Datos**
+Crea una nueva base de datos en tu servidor MySQL o cualquier otro sistema de gestión de bases de datos que estés utilizando.
 
-En esta rama, encontrarás un ejemplo completo de cómo implementar un CRUD (Crear, Leer, Actualizar, Eliminar) utilizando Laravel. El objetivo es mostrar cómo utilizar las funcionalidades de Laravel para realizar operaciones básicas en una base de datos.
+**Paso 4: Crear una Migración**
+Laravel utiliza migraciones para gestionar los cambios en la estructura de la base de datos. Ejecuta el siguiente comando para crear una migración para nuestra tabla:
 
-## Rama Comandos
+```
+php artisan make:migration create_nombretabla_table
+```
 
-En la rama Comandos, aprenderás cómo utilizar los comandos de Artisan, la interfaz de línea de comandos de Laravel. También encontrarás ejemplos de cómo crear tus propios comandos personalizados para automatizar tareas dentro de tu proyecto Laravel.
+Esto creará un archivo de migración en el directorio `database/migrations`. Abre el archivo generado y define las columnas que deseas tener en tu tabla. Por ejemplo:
 
-## Rama Básicos
+```
+public function up()
+{
+    Schema::create('nombretabla', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre');
+        $table->string('email')->unique();
+        $table->timestamps();
+    });
+}
+```
 
-La rama Básicos contiene ejemplos de los conceptos fundamentales de Laravel. Aquí aprenderás sobre enrutamiento, controladores, vistas, migraciones de base de datos y otras características esenciales del framework.
+Este comando sirve para agregar una nueva columna a tu tabla, en ciertos casos es util
+```
+php artisan make:migration add_column_to_table --table=nombre_tabla
+```
+Despues debes configurar los metodos up y down con el nombre y el tipo de dato de la nueva columna
+```
+public function up()
+{
+    Schema::table('nombre_tabla', function (Blueprint $table) {
+        $table->string('nueva_columna')->nullable(); // Puedes ajustar el tipo de columna según tus necesidades
+    });
+}
 
-## Contribuir
+public function down()
+{
+    Schema::table('nombre_tabla', function (Blueprint $table) {
+        $table->dropColumn('nueva_columna');
+    });
+}
+```
 
-¡Tu contribución es bienvenida! Si deseas añadir más ejemplos, corregir errores o mejorar la documentación, siéntete libre de abrir un "pull request", crear un "issue" en este repositorio, solicitar ser colaborador para crear una rama con un tema en especifico.
+**Paso 5: Ejecutar las Migraciones**
+Para aplicar los cambios definidos en la migración y crear la tabla en la base de datos, ejecuta el siguiente comando:
 
-## Licencia
+```
+php artisan migrate
+```
+Tambien puedes usar, para refrescar el estado de tu migraciones o efectuar un cambio
+```
+php artisan migrate:refresh
+```
+Este otro sirve para deshacer tus migraciones
+```
+php artisan migrate:rollback
+```
+Este para ver el estado de tu tablas
+```
+php artisan migrate:status
+```
 
-Este proyecto está licenciado bajo la [Licencia MIT](https://opensource.org/licenses/MIT). Siéntete libre de utilizar el código de este repositorio en tus propios proyectos.
+**Paso 6: Crear el Modelo**
+Los modelos en Laravel nos permiten interactuar con la tabla de la base de datos. Ejecuta el siguiente comando para crear un modelo:
 
-## Recursos adicionales
+Este solo crear el modelo
+```
+php artisan make:model NombreModelo
+```
+Este crear el modelo y la migración al mismo tiempo
+```
+php artisan make:model NombreModelo -m
+```
+Este ultimo comando sirve para crear la migracion el modelo y el controlador al mismo tiempo
+```
+php artisan make:model NombreModelo -mc
+```
+Esto generará un archivo en la carpeta `app/Models` que representa el modelo. Abre el archivo y asegúrate de que el modelo tenga la conexión correcta a la tabla en la base de datos y las relaciones si las hay.
 
-Aquí hay algunos enlaces útiles para aprender más sobre Laravel:
+**Paso 7: Crear el Controlador**
+El controlador manejará las solicitudes HTTP y coordinará la lógica de la aplicación para nuestro CRUD. Ejecuta el siguiente comando para crear el controlador:
 
-- [Documentación oficial de Laravel](https://laravel.com/docs)
-- [Laravel en GitHub](https://github.com/laravel/laravel)
-- [Foro de Laravel en Laravel.io](https://laravel.io/forum)
-- [Comunidad de Laravel en Reddit](https://www.reddit.com/r/laravel/)
+```
+php artisan make:controller NombreController
+```
+```
+php artisan make:controller NombreController --resource
+```
+Este ultimo crear una plantilla de controlador con todos los metodo basicos para trabajar el crud en tu proyecto
 
-¡Espero que encuentres útil este repositorio y que te ayude a aprender y mejorar tus habilidades con Laravel! Si tienes alguna pregunta, no dudes en contactarme.
+Esto generará un archivo en la carpeta `app/Http/Controllers`. Abre el controlador y define los métodos necesarios para crear, leer, actualizar y eliminar registros.
 
-Happy coding!
+Por ejemplo, para el CRUD completo, podemos tener los siguientes métodos:
+```
+public function index()
+{
+    // Lógica para mostrar todos los registros
+}
+
+public function create()
+{
+    // Lógica para mostrar el formulario de creación
+}
+
+public function store(Request $request)
+{
+    // Lógica para guardar un nuevo registro
+}
+
+public function show($id)
+{
+    // Lógica para mostrar un registro específico
+}
+
+public function edit($id)
+{
+    // Lógica para mostrar el formulario de edición
+}
+
+public function update(Request $request, $id)
+{
+    // Lógica para actualizar un registro específico
+}
+
+public function destroy($id)
+{
+    // Lógica para eliminar un registro específico
+}
+```
+
+**Paso 8: Definir las Rutas**
+Las rutas son las URL que nuestros usuarios utilizarán para acceder a las diferentes funciones del CRUD. Abre el archivo `routes/web.php` y define las rutas para cada método del controlador.
+
+Por ejemplo:
+
+```
+Route::get('/nombretabla', [NombreController::class, 'index'])->name('nombrevista.index'); // Ruta para Mostrar la vista principal
+Route::get('/nombretabla/create', [NameController::class, 'create'])->name('nombrevista.create'); // Ruta para la vista Crear
+Route::post('/nombretabla', [NameController::class, 'store'])->name('nombretabla.store'); // Ruta para Guardar
+Route::get('/nombretabla/{tabla}', [NameController::class, 'show'])->name('nombrevista.show'); // Ruta para Mostrar detalles del Registro
+Route::get('/nombretabla/{tabla}/edit', [NameController::class, 'edit'])->name('nombrevista.edit'); // Ruta para la vista Editar
+Route::put('/nombretabla/{tabla}', [NameController::class, 'update'])->name('nombretabla.update'); // Ruta para Actualizar
+Route::delete('/nombretabla/{tabla}', [NombreController::class, 'destroy'])->name('nombretabla.destroy'); // Ruta para Eliminar
+```
+
+Existe una forma mas simplificada para trabajar con las rutas de un crud basico y es la siguiente
+```
+Route::resource('nombretabla', NombreController::class)->names('nombretabla');
+```
+Esto hará uso del llamado de todas las peticiones en una sola línea, pero ten cuidado
+debes llamar a cada vista tanto en el controlador y las vista en views correctamente para que funcione.
+
+**Paso 9: Crear las Vistas**
+Ahora, necesitamos crear las vistas que se utilizarán para mostrar los formularios y los datos. Crea una carpeta `nombretabla` dentro de `resources/views` y crea las vistas necesarias, como `index.blade.php`, `create.blade.php`, `edit.blade.php`, etc.
+
+Dentro de estas vistas, puedes usar el sistema de plantillas Blade de Laravel para mostrar los datos y los formularios.
+
+**Paso 10: Ejecutar el Servidor de Desarrollo**
+Una vez que hayas realizado todos los pasos anteriores, puedes ejecutar el servidor de desarrollo de Laravel para ver tu aplicación en acción:
+
+```
+php artisan serve
+```
+
+¡Listo! Ahora tienes un CRUD básico en Laravel que te permitirá crear, leer, actualizar y eliminar registros en tu base de datos. Puedes acceder a las diferentes rutas definidas en `routes/web.php` para interactuar con tu aplicación.
