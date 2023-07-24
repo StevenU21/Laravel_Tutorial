@@ -18,6 +18,19 @@ return new class extends Migration
     }
 
     /**
+     * Esta nueva columna para la tabla products se llama brand_id y es de tipo entero sin signo (unsigned)
+     * se creo con el siguiente comando de la terminal
+     * php artisan make:migration add_brand_id_to_products
+     * esto permite que la columna brand_id sea una llave foranea de la tabla brands
+     * para migrar esta tabla a la base de datos debes de ejecutar el siguiente comando
+     * php artisan migrate:refresh
+     * en caso de errores ejecuta el siguiente comando
+     * php artisan migrate:rollback
+     * o si no ve a tu base de datos y borra las tablas y vuelve a migrar,
+     * si revisas products en tu base de datos veras que se creo la columna brand_id
+     */
+
+    /**
      * Reverse the migrations.
      */
     public function down(): void
