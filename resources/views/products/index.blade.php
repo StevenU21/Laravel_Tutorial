@@ -42,6 +42,7 @@
                     <thead>
                         <tr>
                             <th><i class="fas fa-heading text-primary"></i> Nombre</th>
+                            <th><i class="fas fa-tag text-info"></i> Marca</th>
                             <th><i class="fas fa-info-circle text-warning"></i> Descripción</th>
                             <th><i class="fas fa-cogs text-secondary"></i> Acciones</th>
                         </tr>
@@ -50,6 +51,7 @@
                         @foreach ($products as $product)
                             <tr>
                                 <td>{{ $product->name }}</td>
+                                <td> {{$product->brand->name}} </td>
                                 <td>{{ $product->description }}</td>
                                 <td>
                                     <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">
