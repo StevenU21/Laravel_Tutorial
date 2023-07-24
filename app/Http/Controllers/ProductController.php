@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand; // se importa el modelo
 use App\Models\Product; // se importa el modelo
 use Illuminate\Http\Request;
 
@@ -40,24 +41,29 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        return view('products.create'); // se muestra el formulario para crear un producto
+        $brands = Brand::all(); // se obtienen todas las marcas
+        return view('products.create', compact('brands')); // se muestra el formulario para crear un producto
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $request->validate([ // Valida los campos
             'name' => 'required',
             'description' => 'required',
+            'brand_id' => 'required'
         ]);
 
         Product::create([ // Crea el Producto
             'name' => $request->name, // Guarda el Nombre
             'description' => $request->description, // Guarda la Descripción
+            'brand_id' => $request->brand_id // Guarda la Marca
         ]);
 
         return redirect()->route('products.index')->with('success', 'Producto Creado'); // Retorna a la vista de los Productos
