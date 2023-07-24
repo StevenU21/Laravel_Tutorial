@@ -2,23 +2,9 @@
 
 Este repositorio de GitHub contiene una serie de ramas que abordan diferentes temas relacionados con el framework Laravel. Cada rama se enfoca en un aspecto específico, proporcionando ejemplos y guías paso a paso para ayudar a los desarrolladores a aprender y familiarizarse con Laravel.
 
-## Ramas disponibles
-
-- [Rama CRUD](#rama-crud): Ejemplo de creación de un CRUD básico utilizando Laravel.
-- [Rama Comandos](#rama-comandos): Ejemplo de uso de comandos de Artisan y creación de comandos personalizados.
-- [Rama Básicos](#rama-básicos): Ejemplos de los conceptos básicos de Laravel, como enrutamiento, controladores y vistas.
-
 ## Rama CRUD
 
 En esta rama, encontrarás un ejemplo completo de cómo implementar un CRUD (Crear, Leer, Actualizar, Eliminar) utilizando Laravel. El objetivo es mostrar cómo utilizar las funcionalidades de Laravel para realizar operaciones básicas en una base de datos.
-
-## Rama Comandos
-
-En la rama Comandos, aprenderás cómo utilizar los comandos de Artisan, la interfaz de línea de comandos de Laravel. También encontrarás ejemplos de cómo crear tus propios comandos personalizados para automatizar tareas dentro de tu proyecto Laravel.
-
-## Rama Básicos
-
-La rama Básicos contiene ejemplos de los conceptos fundamentales de Laravel. Aquí aprenderás sobre enrutamiento, controladores, vistas, migraciones de base de datos y otras características esenciales del framework.
 
 ## Contribuir
 
