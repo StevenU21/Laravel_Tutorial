@@ -6,6 +6,8 @@ En este tutorial, aprenderemos cómo crear un CRUD básico en Laravel, lo que im
 Primero, asegurémonos de tener Laravel instalado. Si no lo tienes, sigue estos pasos:
 - Instalar Laravel utilizando Composer:
   `composer global require laravel/installer`
+-Para despues hacer:
+`laravel new nombreproyecto`
 
 **Paso 2: Configurar el entorno**
 Antes de comenzar, asegúrate de haber configurado el archivo `.env` con la información de la base de datos que desees utilizar.
@@ -102,15 +104,22 @@ Las rutas son las URL que nuestros usuarios utilizarán para acceder a las difer
 
 Por ejemplo:
 
-`
-Route::get('/nombretabla', 'NombreController@index');
-Route::get('/nombretabla/create', 'NombreController@create');
-Route::post('/nombretabla', 'NombreController@store');
-Route::get('/nombretabla/{id}', 'NombreController@show');
-Route::get('/nombretabla/{id}/edit', 'NombreController@edit');
-Route::put('/nombretabla/{id}', 'NombreController@update');
-Route::delete('/nombretabla/{id}', 'NombreController@destroy');
-`
+```
+Route::get('/nombretabla', [NombreController::class, 'index'])->name('nombrevista.index'); // Ruta para Mostrar la vista principal
+Route::get('/nombretabla/create', [NameController::class, 'create'])->name('nombrevista.create'); // Ruta para la vista Crear
+Route::post('/nombretabla', [NameController::class, 'store'])->name('nombretabla.store'); // Ruta para Guardar
+Route::get('/nombretabla/{tabla}', [NameController::class, 'show'])->name('nombrevista.show'); // Ruta para Mostrar detalles del Registro
+Route::get('/nombretabla/{tabla}/edit', [NameController::class, 'edit'])->name('nombrevista.edit'); // Ruta para la vista Editar
+Route::put('/nombretabla/{tabla}', [NameController::class, 'update'])->name('nombretabla.update'); // Ruta para Actualizar
+Route::delete('/nombretabla/{tabla}', [NombreController::class, 'destroy'])->name('nombretabla.destroy'); // Ruta para Eliminar
+```
+
+Existe una forma mas simplificada para trabajar con las rutas de un crud basico y es la siguiente
+```
+Route::resource('nombretabla', NombreController::class)->names('nombretabla');
+```
+Esto hará uso del llamado de todas las peticiones en una sola línea, pero ten cuidado
+debes llamar a cada vista tanto en el controlador y las vista en views correctamente para que funcione.
 
 **Paso 9: Crear las Vistas**
 Ahora, necesitamos crear las vistas que se utilizarán para mostrar los formularios y los datos. Crea una carpeta `nombretabla` dentro de `resources/views` y crea las vistas necesarias, como `index.blade.php`, `create.blade.php`, `edit.blade.php`, etc.
@@ -120,8 +129,8 @@ Dentro de estas vistas, puedes usar el sistema de plantillas Blade de Laravel pa
 **Paso 10: Ejecutar el Servidor de Desarrollo**
 Una vez que hayas realizado todos los pasos anteriores, puedes ejecutar el servidor de desarrollo de Laravel para ver tu aplicación en acción:
 
-`
+```
 php artisan serve
-`
+```
 
 ¡Listo! Ahora tienes un CRUD básico en Laravel que te permitirá crear, leer, actualizar y eliminar registros en tu base de datos. Puedes acceder a las diferentes rutas definidas en `routes/web.php` para interactuar con tu aplicación.
