@@ -5,9 +5,12 @@ En este tutorial, aprenderemos cómo crear un CRUD básico en Laravel, lo que im
 **Paso 1: Instalación**
 Primero, asegurémonos de tener Laravel instalado. Si no lo tienes, sigue estos pasos:
 - Instalar Laravel utilizando Composer:
-  `composer global require laravel/installer`
--Para despues hacer:
-`laravel new nombreproyecto`
+  ```
+  composer global require laravel/installer
+  ```
+  ```
+  laravel new nombreproyecto
+  ```
 
 **Paso 2: Configurar el entorno**
 Antes de comenzar, asegúrate de haber configurado el archivo `.env` con la información de la base de datos que desees utilizar.
