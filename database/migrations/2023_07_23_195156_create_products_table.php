@@ -27,7 +27,7 @@ return new class extends Migration
      * para migrar esta tabla a la base de datos debes de ejecutar el siguiente comando
      * php artisan migrate
      * este comando ejecutara todas las migraciones que se encuentren en la carpeta database/migrations/
-     * recuerda que antes debiste configurar el archivo .env con los datos de tu base de datos
+     * recuerda que antes debiste configurar el archivo .env con los datos de tu base de datos.
      * */
 
     /**
