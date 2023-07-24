@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description']; // Campos que se pueden Llenar
+    protected $fillable = ['name', 'description','brand_id']; // Campos que se pueden Llenar
 
     /**
      * en laravel el modelo para una tabla se crea con el siguiente comando
