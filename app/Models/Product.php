@@ -21,4 +21,10 @@ class Product extends Model
      * tambien para hacer validaciones de los datos que se van a guardar en la base de datos
      * estos son algunos ejemplos básicos del uso de los modelos
      */
+
+    // Relacion uno a muchos
+    public function brand() // Relación de uno a muchos inversa
+    {
+        return $this->belongsTo(Brand::class); // Un Producto pertenece a una Marca
+    }
 }

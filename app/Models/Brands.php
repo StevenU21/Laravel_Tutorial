@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Brands extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'description']; // Campos que se pueden Llenar
+
+    public function products() // Relación de uno a muchos
+    {
+        return $this->hasMany(Product::class); // Una Marca tiene muchos Productos
+    }
 }
