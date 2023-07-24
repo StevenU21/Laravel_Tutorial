@@ -9,6 +9,11 @@
                 <h5 class="card-title">
                     <i class="fas fa-heading text-primary"></i> {{ $products->name }}
                 </h5>
+
+                <h6 class="card-subtitle mb-2 text-muted">
+                    <i class="fas fa-tag text-info"></i> {{ $brand->name }}
+                </h6>
+
                 <p class="card-text">
                     <i class="fas fa-info-circle text-warning"></i> {{ $products->description }}
                 </p>
