@@ -39,20 +39,61 @@ public function up()
 }
 ```
 
+Este comando sirve para agregar una nueva columna a tu tabla, en ciertos casos es util
+```
+php artisan make:migration add_column_to_table --table=nombre_tabla
+```
+Despues debes configurar los metodos up y down con el nombre y el tipo de dato de la nueva columna
+```
+public function up()
+{
+    Schema::table('nombre_tabla', function (Blueprint $table) {
+        $table->string('nueva_columna')->nullable(); // Puedes ajustar el tipo de columna según tus necesidades
+    });
+}
+
+public function down()
+{
+    Schema::table('nombre_tabla', function (Blueprint $table) {
+        $table->dropColumn('nueva_columna');
+    });
+}
+```
+
 **Paso 5: Ejecutar las Migraciones**
 Para aplicar los cambios definidos en la migración y crear la tabla en la base de datos, ejecuta el siguiente comando:
 
 ```
 php artisan migrate
 ```
+Tambien puedes usar, para refrescar el estado de tu migraciones o efectuar un cambio
+```
+php artisan migrate:refresh
+```
+Este otro sirve para deshacer tus migraciones
+```
+php artisan migrate:rollback
+```
+Este para ver el estado de tu tablas
+```
+php artisan migrate:status
+```
 
 **Paso 6: Crear el Modelo**
 Los modelos en Laravel nos permiten interactuar con la tabla de la base de datos. Ejecuta el siguiente comando para crear un modelo:
 
+Este solo crear el modelo
 ```
 php artisan make:model NombreModelo
 ```
-
+Este crear el modelo y la migración al mismo tiempo
+```
+php artisan make:model NombreModelo -m
+```
+Este ultimo comando sirve para crear la migracion el modelo y el controlador al mismo tiempo
+```
+php artisan make:model NombreModelo -mc
+```
 Esto generará un archivo en la carpeta `app/Models` que representa el modelo. Abre el archivo y asegúrate de que el modelo tenga la conexión correcta a la tabla en la base de datos y las relaciones si las hay.
 
 **Paso 7: Crear el Controlador**
@@ -61,6 +102,10 @@ El controlador manejará las solicitudes HTTP y coordinará la lógica de la apl
 ```
 php artisan make:controller NombreController
 ```
+```
+php artisan make:controller NombreController --resource
+```
+Este ultimo crear una plantilla de controlador con todos los metodo basicos para trabajar el crud en tu proyecto
 
 Esto generará un archivo en la carpeta `app/Http/Controllers`. Abre el controlador y define los métodos necesarios para crear, leer, actualizar y eliminar registros.
 
