@@ -1,5 +1,3 @@
-Mis disculpas por el error. Vamos a actualizar la información para tener en cuenta las ramas de "Comandos Básicos", "CRUD Básico" y "CRUD con Tablas Relacionadas":
-
 # Tutorial de Laravel
 
 Este repositorio de GitHub contiene una serie de ramas que abordan diferentes temas relacionados con el framework Laravel. Cada rama se enfoca en un aspecto específico, proporcionando ejemplos y guías paso a paso para ayudar a los desarrolladores a aprender y familiarizarse con Laravel.
