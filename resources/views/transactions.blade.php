@@ -10,8 +10,8 @@
                 <div class="card-body">
                     <div class="row">
                         @foreach($transactions as $transaction)
-                            <div class="col-md-4 mb-1">
-                                <div class="card" style="width: 18rem;">
+                            <div class="col-md-3 mb-1">
+                                <div class="card" style="width: 15rem;">
                                     <img src="/img/images.png" class="card-img-top" alt="">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$transaction->product->name}}</h5>
