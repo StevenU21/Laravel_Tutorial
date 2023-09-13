@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Transaction;
 
 class StripeController extends Controller
 {
@@ -32,11 +34,21 @@ class StripeController extends Controller
 
         return redirect()->away($session->url)
         ->with('stripe_id', $session->id)
-        ->with('product_id', $req->product_id);
+        ->with('amount', $req->amount)
+        ->with('product_id', $req->product_id)
+        ->with('price', $product->price);
     }
 
     public function succes()
     {
+        Transaction::create([
+            'stripe_id' => session('stripe_id'),
+            'amount' => session('amount'),
+            'price' => session('price'),
+            'product_id' => session('product_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+
         return redirect()->back()->with('status', 'Pago realizado con exito');
     }
 

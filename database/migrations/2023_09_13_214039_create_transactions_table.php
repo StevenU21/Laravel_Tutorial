@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('stripe_id');
+            $table->integer('amount');
+            $table->decimal('price', 10, 2);
 
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')
