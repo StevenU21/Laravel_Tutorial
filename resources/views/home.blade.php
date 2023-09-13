@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header p-3"><strong>Productos</strong></div>
+                <div class="card-header p-3"><strong>Productos</strong> <a href="{{route('transactions')}}">Ventas</a></div>
 
                 <div class="card-body">
                     @if (session('status') == 'Pago realizado con exito')

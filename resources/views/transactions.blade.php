@@ -9,19 +9,16 @@
 
                 <div class="card-body">
                     <div class="row">
-                        @foreach($products as $product)
+                        @foreach($transactions as $transaction)
                             <div class="col-md-4 mb-1">
                                 <div class="card" style="width: 18rem;">
                                     <img src="/img/images.png" class="card-img-top" alt="">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{$product->name}}</h5>
-                                        <p class="card-text">{{$product->description}}</p>
-                                        <form action="{{route('pay')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                                            <input type="number" name="amount" placeholder="Cantidad" min="1" required>
-                                            <button type="submit" class="btn btn-primary mt-1">Comprar</button>
-                                        </form>
+                                        <h5 class="card-title">{{$transaction->product->name}}</h5>
+                                        <p class="card-text">{{$transaction->product->description}}</p>
+                                        <p class="card-text">${{$transaction->price}} / {{$transaction->amount}}</p>
+                                        <p class="card-text">Total: ${{$transaction->price * $transaction->amount}}</p>
+                                        <p class="card-text">{{$transaction->created_at}}</p>
                                     </div>
                                 </div>
                             </div>

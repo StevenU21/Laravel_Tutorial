@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\TransactionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('/pay', [StripeController::class, 'pay'])->name('pay')->middleware('auth');
 Route::get('/succes', [StripeController::class, 'succes'])->name('succes')->middleware('auth');
 Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel')->middleware('auth');
+
+Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions')->middleware('auth');
