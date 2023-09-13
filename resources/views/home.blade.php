@@ -25,10 +25,10 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{$product->name}}</h5>
                                         <p class="card-text">{{$product->description}}</p>
-                                        <form action="" method="post">
+                                        <form action="{{route('pay')}}" method="post">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{$product->id}}">
-                                            <input type="number" name="amount" placeholder="Cantidad" min="1">
+                                            <input type="number" name="amount" placeholder="Cantidad" min="1" required>
                                             <button type="submit" class="btn btn-primary">Comprar</button>
                                         </form>
                                     </div>
