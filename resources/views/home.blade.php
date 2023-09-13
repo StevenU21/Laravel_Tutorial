@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">Productos</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,8 +13,25 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    {{ __('You are logged in!') }}
+                    <div class="row">
+                        @foreach($products as $product)
+                            <div class="col-md-4">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="/img/images.png" class="card-img-top" alt="">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$product->name}}</h5>
+                                        <p class="card-text">{{$product->description}}</p>
+                                        <form action="" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{$product->id}}">
+                                            <input type="number" name="amount" placeholder="Cantidad" min="1">
+                                            <button type="submit" class="btn btn-primary">Comprar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
