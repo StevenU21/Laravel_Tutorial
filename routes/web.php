@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\StripeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +23,9 @@ Route::get('/', function () {
         return view('auth.login');
     }
 });
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/pay', [StripeController::class, 'pay'])->name('pay')->middleware('auth');
+Route::get('/succes', [StripeController::class, 'succes'])->name('succes')->middleware('auth');
+Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel')->middleware('auth');

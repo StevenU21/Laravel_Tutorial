@@ -8,8 +8,12 @@
                 <div class="card-header">Productos</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (session('status') == 'Pago realizado con exito')
                         <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @elseif(session('status') == 'Pago cancelado')
+                        <div class="alert alert-danger" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
