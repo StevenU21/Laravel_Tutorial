@@ -1,42 +1,92 @@
-# Tutorial de Laravel
+# Tutorial de Laravel-Stripe
 
-Este repositorio de GitHub contiene una serie de ramas que abordan diferentes temas relacionados con el framework Laravel. Cada rama se enfoca en un aspecto específico, proporcionando ejemplos y guías paso a paso para ayudar a los desarrolladores a aprender y familiarizarse con Laravel.
+En esta rama se explica cómo hacer una pequeña integración de la pasarela de pagos Stripe con Laravel de una forma sencilla.
 
-## Ramas disponibles
+## Pre Requisitos
 
-- [Rama CRUD Básico](#rama-crud-basico): Ejemplo de creación de un CRUD básico utilizando Laravel.
-- [Rama Comandos Básicos](#rama-comandos-basicos): Ejemplo de uso de comandos de Artisan y creación de comandos personalizados en Laravel.
-- [Rama CRUD Tablas Relacionadas](#rama-crud-tablas-relacionadas): Ejemplo de creación de un CRUD con tablas relacionadas utilizando Laravel.
+Para este tutorial es necesario tener una cuenta en Stripe (https://stripe.com) y tener las claves de API que se encuentran en Dashboard -> Desarrolladores -> Claves de API. Hay que usar las claves de prueba a la hora de desarrollar para evitar problemas futuros.
 
-## Rama CRUD Básico
+Es necesario tener un proyecto de Laravel con la librería stripe/stripe-php, que es la que nos permite comunicarnos con la API con clases de PHP.
 
-En esta rama, encontrarás un ejemplo completo de cómo implementar un CRUD (Crear, Leer, Actualizar, Eliminar) básico utilizando Laravel. El objetivo es mostrar cómo utilizar las funcionalidades de Laravel para realizar operaciones básicas en una base de datos.
+## Cómo funciona la API
 
-## Rama Comandos Básicos
+La API de Stripe es bastante extensa, pero en este tutorial veremos la forma más sencilla de realizar transacciones, utilizando una sesión de pago que funciona de manera similar a la autenticación de Google.
 
-En la rama Comandos Básicos, aprenderás cómo utilizar los comandos de Artisan, la interfaz de línea de comandos de Laravel. También encontrarás ejemplos de cómo crear tus propios comandos personalizados para automatizar tareas dentro de tu proyecto Laravel.
+## Variables necesarias
 
-## Rama CRUD Tablas Relacionadas
+En el archivo .env definimos dos nuevas variables: STRIPE_SK= y STRIPE_PK=. En STRIPE_SK ponemos la clave secreta y en STRIPE_PK ponemos la clave publicable.
 
-La rama CRUD Tablas Relacionadas contiene un ejemplo de cómo crear un CRUD con tablas relacionadas utilizando Laravel. Aprenderás a trabajar con relaciones entre modelos y cómo crear operaciones de CRUD para entidades relacionadas en la base de datos.
+También necesitaremos crear un archivo llamado stripe.php en la carpeta config para poder acceder a las variables. Le ponemos el siguiente contenido:
 
-## Contribuir
+    <?php
 
-¡Tu contribución es bienvenida! Si deseas añadir más ejemplos, corregir errores o mejorar la documentación, siéntete libre de abrir un "pull request", crear un "issue" en este repositorio o solicitar ser colaborador para crear una rama con un tema en específico.
+    return [
+        'sk' => env('STRIPE_SK'),
+        'pk' => env('STRIPE_PK'),
+    ];
 
-## Licencia
+## Creando la sesión de pago
 
-Este proyecto está licenciado bajo la [Licencia MIT](https://opensource.org/licenses/MIT). Siéntete libre de utilizar el código de este repositorio en tus propios proyectos.
+Para crear una sesión de pago con Stripe, primero tenemos que configurar la clave de API de la siguiente forma:
 
-## Recursos adicionales
+    \Stripe\Stripe::setApiKey(config('stripe.sk')); //'stripe.sk' es el archivo creado en config
 
-Aquí hay algunos enlaces útiles para aprender más sobre Laravel:
+Ahora simplemente creamos el objeto de la sesión:
 
-- [Documentación oficial de Laravel](https://laravel.com/docs)
-- [Laravel en GitHub](https://github.com/laravel/laravel)
-- [Foro de Laravel en Laravel.io](https://laravel.io/forum)
-- [Comunidad de Laravel en Reddit](https://www.reddit.com/r/laravel/)
+    $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'], //método de pago
+            'line_items' => [[ //información de la transacción
+                'price_data' => [ //información del precio
+                    'currency' => 'usd', // tipo de moneda
+                    'product_data' => [ // información del producto
+                        'name' => 'platanos', //nombre del producto
+                    ],
+                    'unit_amount' => intval(2.99 * 100), //precio del producto, es necesario que sea la cantidad de centavos en un entero
+                ],
+                'quantity' => 3, //cantidad del producto a comprar
+            ]],
+            'mode' => 'payment', //tipo de transacción
+            'success_url' => route('succes'), //URL a la que redireccionará si el pago es correcto
+            'cancel_url' => route('cancel'), //URL a la que redireccionará si el pago falla
+        ]);
 
-¡Espero que encuentres útil este repositorio y que te ayude a aprender y mejorar tus habilidades con Laravel! Si tienes alguna pregunta, no dudes en contactarme.
+    return redirect()->away($session->url)
+        ->with('stripe_id', $session->id)
+        ->with('amount', $req->amount)
+        ->with('product_id', $req->product_id)
+        ->with('price', $product->price); 
+        // esperamos a que Stripe termine para redirecionar y enviar los datos a los metodos
+    
+Este objeto requiere un array con toda la información para hacer la transacción. Una vez hecho eso, el pago ya está terminado, pero es necesario crear las URLs de cancelación y éxito para que todo funcione correctamente. Además, esto nos permite guardar la información de la transacción.
 
-¡Happy coding!
+## Creando las URLs de respuesta
+
+Creamos el metodo para el cancel con su ruta, este metodo solamente redireccionara hacia atras con un mensaje de error.
+
+    public function cancel()
+    {
+        return redirect()->back()->with('status', 'Pago cancelado');
+    }
+
+    //ruta
+    Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel')->middleware('auth');
+
+En el metodo success lo vamos a utilizar para guardad la informaciòn de la transaciòn y redirecionar hacia atras.
+
+    public function succes()
+    {
+        Transaction::create([
+            'stripe_id' => session('stripe_id'),
+            'amount' => session('amount'),
+            'price' => session('price'),
+            'product_id' => session('product_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return redirect()->back()->with('status', 'Pago realizado con exito');
+    }
+
+    //ruta
+    Route::get('/succes', [StripeController::class, 'succes'])->name('succes')->middleware('auth');
+
+## Fin
