@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product; // se importa el modelo
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -33,7 +33,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all(); // se obtienen todos los productos
+        $products = Cache::remember('products', 60, function () {
+            return Product::get();
+        });
+    
         return view('products.index', compact('products')); // se envian los productos a la vista
     }
 
