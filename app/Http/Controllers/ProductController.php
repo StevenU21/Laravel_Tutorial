@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand; // se importa el modelo
 use App\Models\Product; // se importa el modelo
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -34,10 +34,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $products = Product::all(); // se obtienen todos los productos
-        $products = Product::with('brand')->get(); // se obtienen todos los productos con la marca
-        //se agrega eager loading para obtener la marca de cada producto, esto para evitar hacer una consulta por cada producto
-        //mejora el rendimiento de la aplicación
+        //$products = Product::all(); // se obtienen todos los productos
+
+        $products = Cache::remember('products', 60, function () {
+            return Product::with('brand')->get();
+            //se agrega eager loading para obtener la marca de cada producto, esto para evitar hacer una consulta por cada producto
+            //mejora el rendimiento de la aplicación
+
+            //la cache se guarda por 60 segundos
+            //sirve para mejorar el rendimiento de la aplicación
+        });
+        
         return view('products.index', compact('products')); // se envian los productos a la vista
     }
 
