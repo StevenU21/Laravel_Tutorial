@@ -34,7 +34,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all(); // se obtienen todos los productos
+        // $products = Product::all(); // se obtienen todos los productos
+        $products = Product::with('brand')->get(); // se obtienen todos los productos con la marca
+        //se agrega eager loading para obtener la marca de cada producto, esto para evitar hacer una consulta por cada producto
+        //mejora el rendimiento de la aplicación
         return view('products.index', compact('products')); // se envian los productos a la vista
     }
 
