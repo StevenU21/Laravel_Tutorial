@@ -16,6 +16,6 @@ class ShowProducts extends Component
 
     public function render()
     {
-        return view('livewire.products.show-products'	);
+        return view('livewire.products.show-products');
     }
 }

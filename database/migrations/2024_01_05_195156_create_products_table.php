@@ -15,6 +15,9 @@ return new class extends Migration
             $table->increments('id'); // id
             $table->string('name', 60); // atributo name con un limite de 60 caracteres
             $table->text('description'); // detalles o descripción del producto
+
+            $table->integer('brand_id')->unsigned(); // llave foranea de la tabla brands
+            $table->foreign('brand_id')->references('id')->on('brands'); // referencia a la tabla brands
             $table->timestamps(); // fecha de creación y actualización
         });
     }

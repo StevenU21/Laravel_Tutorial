@@ -9,6 +9,18 @@
     </div>
 
     <div class="mb-3">
+        <label for="brand_id" class="form-label">
+            <i class="fas fa-tags text-success"></i> Marca
+        </label>
+        <select class="form-select" id="brand_id" wire:model="brand_id" required>
+            <option value="">Seleccionar Marca</option>
+            @foreach ($brands as $brand)
+                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="mb-3">
         <label for="description" class="form-label">
             <i class="fas fa-info-circle text-warning"></i> Descripción
         </label>

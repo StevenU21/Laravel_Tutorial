@@ -21,7 +21,7 @@ class LoadProducts extends Component
 
     public function render()
     {
-        $products = Product::paginate(10);
+        $products = Product::with('brand')->latest()->paginate(10);
         return view('livewire.products.load-products', ['products' => $products]);
     }
 }

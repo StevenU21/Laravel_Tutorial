@@ -9,6 +9,10 @@
             <p class="card-text">
                 <i class="fas fa-info-circle text-warning"></i> {{ $product->description }}
             </p>
+
+            <p class="card-text">
+                <i class="fas fa-dollar-sign text-success"></i> {{ $product->brand->name }}
+            </p>
         </div>
     </div>
 
@@ -17,5 +21,4 @@
             <i class="fas fa-arrow-left"></i> Volver
         </a>
     </div>
-
 </div>
