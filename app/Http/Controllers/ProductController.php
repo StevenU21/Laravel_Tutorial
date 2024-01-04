@@ -5,38 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Product; // se importa el modelo
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * El controlador es el encargado de recibir las peticiones del usuario
-     * y de enviar las respuestas al usuario
-     * Se crea un controlador con el siguiente comando
-     * php artisan make:controller ProductController --resource (permite crear los métodos básicos de un controlador)
-     * este comando creara un archivo en la carpeta app/Http/Controllers/ con el nombre del controlador
-     * en este caso el archivo se llama ProductController.php
-     * en este archivo se crea el controlador con los métodos que se desean
-     * estos son algunos ejemplos básicos del uso de los controladores
-     * index es para mostrar todos los productos
-     * create es para mostrar el formulario para crear un producto
-     * store es para guardar un producto
-     * show es para mostrar un producto
-     * edit es para mostrar el formulario para editar un producto
-     * update es para actualizar un producto
-     * destroy es para eliminar un producto
-     * claro que los controladores tienen muchos mas usos
-     */
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Cache::remember('products', 60, function () {
-            return Product::get();
-        });
-    
+        $products = Product::all(); // se obtienen todos los productos
         return view('products.index', compact('products')); // se envian los productos a la vista
     }
 
@@ -56,11 +34,17 @@ class ProductController extends Controller
         $request->validate([ // Valida los campos
             'name' => 'required',
             'description' => 'required',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:8048', // Valida que el archivo sea una imagen
         ]);
+        // Guarda la imagen en el disco público y obtén su nombre
+        $imageName = time() . '.' . $request->file->extension();
+        Storage::disk('public')->put('images/' . $imageName, file_get_contents($request->file));
 
         Product::create([ // Crea el Producto
             'name' => $request->name, // Guarda el Nombre
             'description' => $request->description, // Guarda la Descripción
+            'image_original' => $request->file->getClientOriginalName(), // Guarda el nombre original de la imagen
+            'image_name' => $imageName, // Guarda el nombre de la imagen
         ]);
 
         return redirect()->route('products.index')->with('success', 'Producto Creado'); // Retorna a la vista de los Productos
@@ -94,9 +78,22 @@ class ProductController extends Controller
         $request->validate([ // Valida los campos
             'name' => 'required',
             'description' => 'required',
+            'file' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg,webp|max:8048', // Valida que el archivo sea una imagen
         ]);
 
-        $product->update($request->all()); // Actualiza el Producto
+        $data = $request->only(['name', 'description']); // Obtiene solo los campos 'name' y 'description'
+
+        if ($request->hasFile('file')) {
+            // Guarda la imagen en el disco público y obtén su nombre
+            $imageName = time() . '.' . $request->file->extension();
+            Storage::disk('public')->put('images/' . $imageName, file_get_contents($request->file));
+
+            // Actualiza el nombre de la imagen en la base de datos
+            $data['image_original'] = $request->file->getClientOriginalName();
+            $data['image_name'] = $imageName;
+        }
+
+        $product->update($data); // Actualiza el Producto
 
         return redirect()->route('products.index')->with('message', 'Producto Actualizado'); // Retorna a la vista de los Productos
     }
@@ -108,6 +105,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id); // Obtiene el Producto
         $product->delete(); // Elimina el Producto
+        //elimina la imagen del disco público
+        Storage::disk('public')->delete('images/' . $product->image_name);
         return redirect()->route('products.index')->with('alert', 'Producto Eliminado'); // Retorna a la vista de los Productos
     }
 }

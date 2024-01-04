@@ -36,6 +36,11 @@ return [
             'throw' => false,
         ],
 
+        //recuerda que estamos usando este disco para guardar las imagenes
+        //no olvides ejecutar el comando php artisan storage:link
+        //para crear el enlace simbolico
+
+        //tu tambien puedes crear un disco para guardar las imagenes en la carpeta publica
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -44,6 +49,7 @@ return [
             'throw' => false,
         ],
 
+        //proximanente crearemos un disco para guardar las imagenes con el servicio de amazon s3
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

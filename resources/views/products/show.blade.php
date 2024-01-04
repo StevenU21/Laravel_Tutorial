@@ -12,6 +12,7 @@
                 <p class="card-text">
                     <i class="fas fa-info-circle text-warning"></i> {{ $products->description }}
                 </p>
+                <img src="{{ $products->url() }}" alt="{{ $products->name }}" width="500" height="300">
             </div>
         </div>
 
