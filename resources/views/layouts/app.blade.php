@@ -22,7 +22,7 @@ archivos CSS y JS necesarios para el funcionamiento de la aplicación.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js']);
 </head>
 
 <body>
