@@ -15,6 +15,13 @@
         <textarea class="form-control" id="description" wire:model="description" rows="4" required></textarea>
     </div>
 
+    <div class="mb-3">
+        <label for="file" class="form-label">
+            <i class="fas fa-image text-info"></i> Imagen
+        </label>
+        <input type="file" class="form-control" id="file" wire:model="file" required>
+    </div>
+
     <button type="submit" class="btn btn-primary">
         <i class="fas fa-save"></i> Guardar
     </button>

@@ -28,6 +28,10 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
                             <td>
+                                <img src="{{ $product->url() }}" alt="{{ $product->name }}" width="150"
+                                    height="100">
+                            </td>
+                            <td>
                                 <a href="{{ route('products.show', $product->id) }}" class="btn btn-primary">
                                     <i class="fas fa-eye"></i> Ver
                                 </a>
