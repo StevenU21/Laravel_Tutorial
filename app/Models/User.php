@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relación con la tabla rents
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
 }
